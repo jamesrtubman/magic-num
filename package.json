@@ -1,0 +1,46 @@
+{
+  "name": "magic-num",
+  "version": "0.1.0",
+  "description": "Named constants for common magic numbers and strings",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    }
+  },
+  "sideEffects": false,
+  "files": ["dist"],
+  "engines": { "node": ">=18" },
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "lint": "eslint src",
+    "format": "prettier --write src",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "npm run build && npm test"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.31.0",
+    "@eslint/js": "^10.0.1",
+    "@vitest/coverage-v8": "^4.1.5",
+    "eslint": "^10.3.0",
+    "eslint-config-prettier": "^10.1.8",
+    "prettier": "^3.8.3",
+    "tsup": "^8.5.1",
+    "typescript": "^5.8.0",
+    "typescript-eslint": "^8.59.2",
+    "vitest": "^4.1.5"
+  }
+}
