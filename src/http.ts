@@ -1,0 +1,76 @@
+// src/http.ts
+// 25 most common HTTP status codes for v1.
+// Pattern: private `as const` source object → spread into HttpStatus namespace
+// (with helpers) → direct property reference for flat HTTP_* exports.
+// Verified by tsc --noEmit --strict during phase 2 research.
+
+const HTTP_CODES = {
+  // 2xx Success
+  OK: 200,
+  CREATED: 201,
+  ACCEPTED: 202,
+  NO_CONTENT: 204,
+  PARTIAL_CONTENT: 206,
+  // 3xx Redirect
+  MOVED_PERMANENTLY: 301,
+  FOUND: 302,
+  NOT_MODIFIED: 304,
+  TEMPORARY_REDIRECT: 307,
+  PERMANENT_REDIRECT: 308,
+  // 4xx Client Error
+  BAD_REQUEST: 400,
+  UNAUTHORIZED: 401,
+  FORBIDDEN: 403,
+  NOT_FOUND: 404,
+  METHOD_NOT_ALLOWED: 405,
+  CONFLICT: 409,
+  GONE: 410,
+  UNSUPPORTED_MEDIA_TYPE: 415,
+  UNPROCESSABLE_ENTITY: 422,
+  TOO_MANY_REQUESTS: 429,
+  // 5xx Server Error
+  INTERNAL_SERVER_ERROR: 500,
+  NOT_IMPLEMENTED: 501,
+  BAD_GATEWAY: 502,
+  SERVICE_UNAVAILABLE: 503,
+  GATEWAY_TIMEOUT: 504,
+} as const;
+
+export const HttpStatus = {
+  ...HTTP_CODES,
+  isSuccess(code: number): boolean {
+    return code >= 200 && code < 300;
+  },
+  isClientError(code: number): boolean {
+    return code >= 400 && code < 500;
+  },
+  isServerError(code: number): boolean {
+    return code >= 500 && code < 600;
+  },
+} as const;
+
+export const HTTP_OK = HTTP_CODES.OK;
+export const HTTP_CREATED = HTTP_CODES.CREATED;
+export const HTTP_ACCEPTED = HTTP_CODES.ACCEPTED;
+export const HTTP_NO_CONTENT = HTTP_CODES.NO_CONTENT;
+export const HTTP_PARTIAL_CONTENT = HTTP_CODES.PARTIAL_CONTENT;
+export const HTTP_MOVED_PERMANENTLY = HTTP_CODES.MOVED_PERMANENTLY;
+export const HTTP_FOUND = HTTP_CODES.FOUND;
+export const HTTP_NOT_MODIFIED = HTTP_CODES.NOT_MODIFIED;
+export const HTTP_TEMPORARY_REDIRECT = HTTP_CODES.TEMPORARY_REDIRECT;
+export const HTTP_PERMANENT_REDIRECT = HTTP_CODES.PERMANENT_REDIRECT;
+export const HTTP_BAD_REQUEST = HTTP_CODES.BAD_REQUEST;
+export const HTTP_UNAUTHORIZED = HTTP_CODES.UNAUTHORIZED;
+export const HTTP_FORBIDDEN = HTTP_CODES.FORBIDDEN;
+export const HTTP_NOT_FOUND = HTTP_CODES.NOT_FOUND;
+export const HTTP_METHOD_NOT_ALLOWED = HTTP_CODES.METHOD_NOT_ALLOWED;
+export const HTTP_CONFLICT = HTTP_CODES.CONFLICT;
+export const HTTP_GONE = HTTP_CODES.GONE;
+export const HTTP_UNSUPPORTED_MEDIA_TYPE = HTTP_CODES.UNSUPPORTED_MEDIA_TYPE;
+export const HTTP_UNPROCESSABLE_ENTITY = HTTP_CODES.UNPROCESSABLE_ENTITY;
+export const HTTP_TOO_MANY_REQUESTS = HTTP_CODES.TOO_MANY_REQUESTS;
+export const HTTP_INTERNAL_SERVER_ERROR = HTTP_CODES.INTERNAL_SERVER_ERROR;
+export const HTTP_NOT_IMPLEMENTED = HTTP_CODES.NOT_IMPLEMENTED;
+export const HTTP_BAD_GATEWAY = HTTP_CODES.BAD_GATEWAY;
+export const HTTP_SERVICE_UNAVAILABLE = HTTP_CODES.SERVICE_UNAVAILABLE;
+export const HTTP_GATEWAY_TIMEOUT = HTTP_CODES.GATEWAY_TIMEOUT;
