@@ -2,6 +2,7 @@
   "name": "magic-num",
   "version": "0.1.0",
   "description": "Named constants for common magic numbers and strings",
+  "license": "MIT",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
