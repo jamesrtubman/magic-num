@@ -3,3 +3,10 @@ node_modules/
 *.tsbuildinfo
 coverage/
 .DS_Store
+
+# Claude / AI tooling
+.claude/
+.claude-flow/
+.mcp.json
+.planning/
+CLAUDE.md
