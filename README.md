@@ -205,6 +205,52 @@ import { FAKE_EMAIL } from 'magic-num';
 
 ---
 
+## Small Integers
+
+### Flat exports — 1 through 20
+
+| Constant | Value |
+|----------|-------|
+| `ONE` | `1` |
+| `TWO` | `2` |
+| `THREE` | `3` |
+| `FOUR` | `4` |
+| `FIVE` | `5` |
+| `SIX` | `6` |
+| `SEVEN` | `7` |
+| `EIGHT` | `8` |
+| `NINE` | `9` |
+| `TEN` | `10` |
+| `ELEVEN` | `11` |
+| `TWELVE` | `12` |
+| `THIRTEEN` | `13` |
+| `FOURTEEN` | `14` |
+| `FIFTEEN` | `15` |
+| `SIXTEEN` | `16` |
+| `SEVENTEEN` | `17` |
+| `EIGHTEEN` | `18` |
+| `NINETEEN` | `19` |
+| `TWENTY` | `20` |
+
+### `Count` namespace
+
+`Count.ONE` through `Count.TWENTY` — same values as the flat exports above.
+
+### `Retry` namespace (namespace-only)
+
+| Member | Value | Meaning |
+|--------|-------|---------|
+| `Retry.ONCE` | `1` | Retry once |
+| `Retry.TWICE` | `2` | Retry twice |
+| `Retry.DEFAULT` | `3` | Conventional default retry count |
+| `Retry.MAX` | `5` | Conventional maximum retry count |
+
+### `Calls` namespace (namespace-only)
+
+`Calls.ONE` through `Calls.TEN` — semantic call/assertion counts for use in test spies (e.g. `toHaveBeenCalledTimes(Calls.THREE)`).
+
+---
+
 ## Usage Examples
 
 ### Jest (CommonJS)
@@ -246,6 +292,17 @@ test('pagination defaults', () => {
   expect(getPage().size).toBe(DEFAULT_PAGE_SIZE); // 20
   expect(getPage({ size: 9999 }).size).toBeLessThanOrEqual(MAX_PAGE_SIZE); // 100
 });
+
+const { Retry, Calls, THREE } = require('magic-num');
+
+test('retries with default count', () => {
+  const client = createClient({ retries: Retry.DEFAULT }); // 3
+  expect(client.retries).toBe(THREE);
+});
+
+test('spy called expected number of times', () => {
+  expect(mockFn).toHaveBeenCalledTimes(Calls.TWO); // 2
+});
 ```
 
 ### Vitest (ESM / TypeScript)
@@ -284,6 +341,17 @@ test('polling interval uses one-second delay', () => {
 test('token expiry is set to 1 hour', () => {
   const token = createToken({ expiresIn: ONE_HOUR_S }); // 3600
   expect(token.expiresIn).toBe(3600);
+});
+
+import { Retry, Calls, THREE } from 'magic-num';
+
+test('retries with default count', () => {
+  const client = createClient({ retries: Retry.DEFAULT }); // 3
+  expect(client.retries).toBe(THREE);
+});
+
+test('spy called expected number of times', () => {
+  expect(mockFn).toHaveBeenCalledTimes(Calls.TWO); // 2
 });
 
 import { NEGATIVE_ONE, EMPTY_STRING, Boundary } from 'magic-num';

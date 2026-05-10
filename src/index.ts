@@ -4,3 +4,4 @@ export * from './http';
 export * from './time';
 export * from './limits';
 export * from './test-data';
+export * from './count';
