@@ -251,6 +251,159 @@ import { FAKE_EMAIL } from 'magic-num';
 
 ---
 
+## Math
+
+### Flat exports — constants
+
+| Constant | Value | Meaning |
+|----------|-------|---------|
+| `PI` | `3.141592653589793` | π |
+| `TAU` | `6.283185307179586` | τ (2π) |
+| `E` | `2.718281828459045` | Euler's number |
+| `GOLDEN_RATIO` | `1.618033988749895` | φ (golden ratio) |
+| `SQRT_2` | `1.4142135623730951` | √2 |
+| `SQRT_1_2` | `0.7071067811865476` | √½ |
+| `LN_2` | `0.6931471805599453` | ln 2 |
+| `LN_10` | `2.302585092994046` | ln 10 |
+| `HALF` | `0.5` | One half |
+| `QUARTER` | `0.25` | One quarter |
+| `THIRD` | `0.3333333333333333` | One third |
+| `TWO_THIRDS` | `0.6666666666666666` | Two thirds |
+| `THREE_QUARTERS` | `0.75` | Three quarters |
+| `HUNDRED_PERCENT` | `100` | 100% scalar |
+
+### Math helpers
+
+Pure functions, exported both at top level and on the `MathConst` namespace:
+
+| Member | Signature | Behaviour |
+|--------|-----------|-----------|
+| `clamp(n, min, max)` | `(n: number, min: number, max: number) => number` | Constrain `n` to `[min, max]` |
+| `isBetween(n, min, max)` | `(n: number, min: number, max: number) => boolean` | True when `min ≤ n ≤ max` (inclusive) |
+| `percentOf(n, pct)` | `(n: number, pct: number) => number` | `n * pct / 100` |
+
+### `MathConst` namespace
+
+`MathConst.PI` … `MathConst.HUNDRED_PERCENT` — same values as the flat constants above —
+plus `MathConst.clamp`, `MathConst.isBetween`, `MathConst.percentOf`.
+
+> Named `MathConst` (not `Math`) to avoid shadowing the JavaScript global.
+
+---
+
+## Network Ports
+
+### Flat exports
+
+| Constant | Value | Service |
+|----------|-------|---------|
+| `PORT_FTP` | `21` | FTP |
+| `PORT_SSH` | `22` | SSH |
+| `PORT_TELNET` | `23` | Telnet |
+| `PORT_SMTP` | `25` | SMTP |
+| `PORT_DNS` | `53` | DNS |
+| `PORT_HTTP` | `80` | HTTP |
+| `PORT_POP3` | `110` | POP3 |
+| `PORT_HTTPS` | `443` | HTTPS |
+| `PORT_MYSQL` | `3306` | MySQL |
+| `PORT_POSTGRES` | `5432` | PostgreSQL |
+| `PORT_REDIS` | `6379` | Redis |
+| `PORT_MONGODB` | `27017` | MongoDB |
+
+### `Ports` namespace
+
+`Ports.FTP`, `Ports.SSH`, `Ports.HTTP`, `Ports.HTTPS`, `Ports.POSTGRES`, … — same values
+as the flat exports, under prefix-free keys.
+
+---
+
+## Numeric Maxima
+
+### Flat exports
+
+| Constant | Value | Meaning |
+|----------|-------|---------|
+| `MAX_UINT8` | `255` | Max unsigned 8-bit integer (2^8 − 1) |
+| `MAX_UINT16` | `65535` | Max unsigned 16-bit integer (2^16 − 1) |
+| `MAX_UINT32` | `4294967295` | Max unsigned 32-bit integer (2^32 − 1) |
+| `RGB_MAX` | `255` | Max 8-bit RGB channel value |
+| `ALPHA_MAX` | `255` | Max 8-bit alpha channel value |
+
+### `NumericMax` namespace
+
+`NumericMax.MAX_UINT8`, `NumericMax.MAX_UINT16`, `NumericMax.MAX_UINT32`, `NumericMax.RGB_MAX`,
+`NumericMax.ALPHA_MAX` — same values as the flat exports.
+
+> These are **unsigned** maxima. The signed 32-bit max lives in Limits as `MAX_INT_32` (`2147483647`).
+
+---
+
+## Test Framework Defaults
+
+Default magic numbers baked into common test frameworks. Flat exports are framework-prefixed;
+namespaces are framework-scoped.
+
+### `JestDefaults` — `JEST_*`
+
+| Member | Flat export | Value | Meaning |
+|--------|-------------|-------|---------|
+| `JestDefaults.TEST_TIMEOUT_MS` | `JEST_TEST_TIMEOUT_MS` | `5000` | Default `testTimeout` |
+
+### `VitestDefaults` — `VITEST_*`
+
+| Member | Flat export | Value | Meaning |
+|--------|-------------|-------|---------|
+| `VitestDefaults.TEST_TIMEOUT_MS` | `VITEST_TEST_TIMEOUT_MS` | `5000` | Default `testTimeout` |
+| `VitestDefaults.HOOK_TIMEOUT_MS` | `VITEST_HOOK_TIMEOUT_MS` | `10000` | Default `hookTimeout` |
+
+### `PlaywrightDefaults` — `PLAYWRIGHT_*`
+
+| Member | Flat export | Value | Meaning |
+|--------|-------------|-------|---------|
+| `PlaywrightDefaults.TIMEOUT_MS` | `PLAYWRIGHT_TIMEOUT_MS` | `30000` | Default test timeout |
+| `PlaywrightDefaults.EXPECT_TIMEOUT_MS` | `PLAYWRIGHT_EXPECT_TIMEOUT_MS` | `5000` | Default `expect` timeout |
+| `PlaywrightDefaults.VIEWPORT_WIDTH` | `PLAYWRIGHT_VIEWPORT_WIDTH` | `1280` | Default viewport width |
+| `PlaywrightDefaults.VIEWPORT_HEIGHT` | `PLAYWRIGHT_VIEWPORT_HEIGHT` | `720` | Default viewport height |
+
+### `CypressDefaults` — `CYPRESS_*`
+
+| Member | Flat export | Value | Meaning |
+|--------|-------------|-------|---------|
+| `CypressDefaults.DEFAULT_COMMAND_TIMEOUT_MS` | `CYPRESS_DEFAULT_COMMAND_TIMEOUT_MS` | `4000` | `defaultCommandTimeout` |
+| `CypressDefaults.PAGE_LOAD_TIMEOUT_MS` | `CYPRESS_PAGE_LOAD_TIMEOUT_MS` | `60000` | `pageLoadTimeout` |
+| `CypressDefaults.REQUEST_TIMEOUT_MS` | `CYPRESS_REQUEST_TIMEOUT_MS` | `5000` | `requestTimeout` |
+| `CypressDefaults.RESPONSE_TIMEOUT_MS` | `CYPRESS_RESPONSE_TIMEOUT_MS` | `30000` | `responseTimeout` |
+| `CypressDefaults.VIEWPORT_WIDTH` | `CYPRESS_VIEWPORT_WIDTH` | `1000` | `viewportWidth` |
+| `CypressDefaults.VIEWPORT_HEIGHT` | `CYPRESS_VIEWPORT_HEIGHT` | `660` | `viewportHeight` |
+
+---
+
+## React Ecosystem Defaults
+
+Default magic numbers from common React-ecosystem libraries. (React core exposes no stable
+public numeric defaults, so it is intentionally excluded.)
+
+### `ReactTestingLibrary` — `RTL_*`
+
+| Member | Flat export | Value | Meaning |
+|--------|-------------|-------|---------|
+| `ReactTestingLibrary.ASYNC_UTIL_TIMEOUT_MS` | `RTL_ASYNC_UTIL_TIMEOUT_MS` | `1000` | `asyncUtilTimeout` |
+| `ReactTestingLibrary.POLL_INTERVAL_MS` | `RTL_POLL_INTERVAL_MS` | `50` | `waitFor` poll interval |
+
+### `ReactQuery` — `RQ_*` (TanStack Query v5)
+
+| Member | Flat export | Value | Meaning |
+|--------|-------------|-------|---------|
+| `ReactQuery.GC_TIME_MS` | `RQ_GC_TIME_MS` | `300000` | `gcTime` (5 min) |
+| `ReactQuery.STALE_TIME_MS` | `RQ_STALE_TIME_MS` | `0` | `staleTime` |
+| `ReactQuery.DEFAULT_RETRY` | `RQ_DEFAULT_RETRY` | `3` | Query `retry` count |
+| `ReactQuery.RETRY_DELAY_BASE_MS` | `RQ_RETRY_DELAY_BASE_MS` | `1000` | `retryDelay` base |
+| `ReactQuery.RETRY_DELAY_MAX_MS` | `RQ_RETRY_DELAY_MAX_MS` | `30000` | `retryDelay` cap |
+
+> v5 renamed v4's `cacheTime` to `gcTime`.
+
+---
+
 ## Usage Examples
 
 ### Jest (CommonJS)
