@@ -1,6 +1,6 @@
 {
   "name": "magic-num",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "description": "Named constants for common magic numbers and strings",
   "license": "MIT",
   "type": "module",
@@ -20,8 +20,12 @@
     }
   },
   "sideEffects": false,
-  "files": ["dist"],
-  "engines": { "node": ">=18" },
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
     "build": "tsup",
     "test": "vitest run",
