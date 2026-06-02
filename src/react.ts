@@ -28,16 +28,25 @@ const REACT_QUERY_VALUES = {
 } as const;
 
 // ===== NAMESPACES (public) =====
+/** React Testing Library / dom-testing-library default config values. */
 export const ReactTestingLibrary = { ...RTL_VALUES } as const;
+/** TanStack React Query v5 default config values. */
 export const ReactQuery = { ...REACT_QUERY_VALUES } as const;
 
 // ===== FLAT EXPORTS — React Testing Library (public) =====
+/** RTL default async-utility timeout, ms. Value: 1000. */
 export const RTL_ASYNC_UTIL_TIMEOUT_MS = RTL_VALUES.ASYNC_UTIL_TIMEOUT_MS; // type: 1000
+/** RTL default `waitFor` poll interval, ms. Value: 50. */
 export const RTL_POLL_INTERVAL_MS = RTL_VALUES.POLL_INTERVAL_MS; // type: 50
 
 // ===== FLAT EXPORTS — TanStack React Query (public) =====
+/** React Query v5 default garbage-collection time, ms (5 min). Value: 300000. */
 export const RQ_GC_TIME_MS = REACT_QUERY_VALUES.GC_TIME_MS; // type: 300000
+/** React Query default stale time, ms. Value: 0. */
 export const RQ_STALE_TIME_MS = REACT_QUERY_VALUES.STALE_TIME_MS; // type: 0
+/** React Query default retry count. Value: 3. */
 export const RQ_DEFAULT_RETRY = REACT_QUERY_VALUES.DEFAULT_RETRY; // type: 3
+/** React Query retry-delay base, ms. Value: 1000. */
 export const RQ_RETRY_DELAY_BASE_MS = REACT_QUERY_VALUES.RETRY_DELAY_BASE_MS; // type: 1000
+/** React Query retry-delay cap, ms. Value: 30000. */
 export const RQ_RETRY_DELAY_MAX_MS = REACT_QUERY_VALUES.RETRY_DELAY_MAX_MS; // type: 30000

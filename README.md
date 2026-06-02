@@ -128,6 +128,24 @@ import { FAKE_EMAIL } from 'magic-num';
 
 `TimeS.ONE_MINUTE`, `TimeS.ONE_HOUR`, `TimeS.ONE_DAY`, `TimeS.ONE_WEEK` — same values as the flat second exports.
 
+### Time converters
+
+Pure helper functions (also on the `TimeConvert` namespace):
+
+| Function | Result |
+|----------|--------|
+| `secondsToMs(s)` | `s * 1000` |
+| `msToSeconds(ms)` | `ms / 1000` |
+| `minutesToMs(min)` | `min * 60000` |
+| `hoursToMs(h)` | `h * 3600000` |
+| `msToMinutes(ms)` | `ms / 60000` |
+
+```typescript
+import { secondsToMs, TimeConvert } from 'magic-num';
+secondsToMs(30);            // 30000
+TimeConvert.minutesToMs(5); // 300000
+```
+
 ---
 
 ## Limits
@@ -156,7 +174,22 @@ import { FAKE_EMAIL } from 'magic-num';
 
 ### `Bytes` namespace
 
-`Bytes.ONE_KB`, `Bytes.ONE_MB`, `Bytes.ONE_GB` — same values as the flat byte size exports.
+`Bytes.ONE_KB`, `Bytes.ONE_MB`, `Bytes.ONE_GB` — same values as the flat byte size exports. The byte helpers below are also attached: `Bytes.kbToBytes`, `Bytes.mbToBytes`, `Bytes.gbToBytes`, `Bytes.formatBytes`.
+
+### Byte formatters
+
+| Function | Result |
+|----------|--------|
+| `kbToBytes(kb)` | `kb * 1024` |
+| `mbToBytes(mb)` | `mb * 1048576` |
+| `gbToBytes(gb)` | `gb * 1073741824` |
+| `formatBytes(n, decimals = 1)` | human-readable string, e.g. `"1.5 MB"` |
+
+```typescript
+import { formatBytes, kbToBytes } from 'magic-num';
+formatBytes(1572864); // "1.5 MB"
+kbToBytes(2);         // 2048
+```
 
 ### Flat exports — pagination and string lengths
 
@@ -234,7 +267,30 @@ import { FAKE_EMAIL } from 'magic-num';
 
 ### `Count` namespace
 
-`Count.ONE` through `Count.TWENTY` — same values as the flat exports above.
+`Count.ONE` through `Count.TWENTY` — same values as the flat exports above. Also carries the dynamic helpers below as `Count.of` (= `num`) and `Count.range`.
+
+### Dynamic counts — beyond 20
+
+Named words stop at `TWENTY` on purpose (no `THREE_HUNDRED_SIXTY_FIVE`, no 1000-line file). For larger or computed values, use the helpers — they cover any number without bloating the bundle.
+
+| Helper | Behaviour |
+|--------|-----------|
+| `num(value)` | Identity that **preserves the literal type**: `num(256)` is typed `256` (not `number`). Marks a bare number as intentional and keeps the literal-type contract. Passing a `number` variable returns `number`. |
+| `range(start, end, step?)` | Inclusive integer sequence. Ascending when `start <= end`, descending otherwise. `step` defaults to `1` and must be a positive integer (throws `RangeError` otherwise). Elements are typed `number`. |
+
+```typescript
+import { num, range, Count } from 'magic-num';
+
+const port = num(8080);     // type: 8080 (literal preserved)
+Count.of(50);               // 50  — reads as "a count of 50"
+
+range(1, 5);                // [1, 2, 3, 4, 5]
+range(0, 10, 2);            // [0, 2, 4, 6, 8, 10]
+range(5, 1);                // [5, 4, 3, 2, 1]
+Count.range(1, 3);          // [1, 2, 3]
+```
+
+> `range` returns a runtime-generated `number[]`, so its elements cannot carry per-value literal types — that's the tradeoff for not enumerating sequences in source.
 
 ### `Retry` namespace (namespace-only)
 
@@ -401,6 +457,137 @@ public numeric defaults, so it is intentionally excluded.)
 | `ReactQuery.RETRY_DELAY_MAX_MS` | `RQ_RETRY_DELAY_MAX_MS` | `30000` | `retryDelay` cap |
 
 > v5 renamed v4's `cacheTime` to `gcTime`.
+
+---
+
+## Calendar
+
+Date-arithmetic counts (units within larger units). Complements **Time Constants** (durations).
+
+### Flat exports
+
+| Constant | Value | Meaning |
+|----------|-------|---------|
+| `DAYS_IN_WEEK` | `7` | Days in a week |
+| `MONTHS_IN_YEAR` | `12` | Months in a year |
+| `HOURS_IN_DAY` | `24` | Hours in a day |
+| `MINUTES_IN_HOUR` | `60` | Minutes in an hour |
+| `SECONDS_IN_MINUTE` | `60` | Seconds in a minute |
+| `DAYS_IN_YEAR` | `365` | Days in a common year |
+| `DAYS_IN_LEAP_YEAR` | `366` | Days in a leap year |
+| `WEEKS_IN_YEAR` | `52` | Whole weeks in a year |
+| `QUARTERS_IN_YEAR` | `4` | Quarters in a year |
+| `DAYS_IN_FORTNIGHT` | `14` | Days in a fortnight |
+
+### `Calendar` namespace
+
+Same values, namespaced: `Calendar.DAYS_IN_WEEK`, `Calendar.MONTHS_IN_YEAR`, … (10 keys).
+
+---
+
+## Angles
+
+Angle constants in degrees, plus degree↔radian converters.
+
+### Flat exports
+
+| Constant | Value | Meaning |
+|----------|-------|---------|
+| `FULL_CIRCLE_DEG` | `360` | Degrees in a full circle |
+| `HALF_CIRCLE_DEG` | `180` | Degrees in a half circle |
+| `QUARTER_CIRCLE_DEG` | `90` | Degrees in a quarter circle |
+| `THREE_QUARTER_CIRCLE_DEG` | `270` | Degrees in three-quarters of a circle |
+| `RIGHT_ANGLE_DEG` | `90` | A right angle |
+
+### Helpers
+
+| Function | Result |
+|----------|--------|
+| `toRadians(deg)` | `(deg * Math.PI) / 180` |
+| `toDegrees(rad)` | `(rad * 180) / Math.PI` |
+
+### `Angles` namespace
+
+`Angles.FULL_CIRCLE_DEG`, … plus `Angles.toRadians`, `Angles.toDegrees`.
+
+```typescript
+import { toRadians, FULL_CIRCLE_DEG } from 'magic-num';
+toRadians(180); // 3.141592653589793
+```
+
+---
+
+## Color
+
+Color magic numbers for RGB/RGBA/HSL work and hex parsing.
+
+### Flat exports
+
+| Constant | Value | Meaning |
+|----------|-------|---------|
+| `RGB_MIN` | `0` | Minimum 8-bit RGB channel value |
+| `RGB_CHANNELS` | `3` | Channels in an RGB color |
+| `RGBA_CHANNELS` | `4` | Channels in an RGBA color |
+| `ALPHA_TRANSPARENT` | `0` | Fully transparent alpha |
+| `ALPHA_OPAQUE` | `1` | Fully opaque alpha |
+| `HEX_RADIX` | `16` | Radix for hex color strings |
+| `MAX_HUE` | `360` | Maximum HSL hue (degrees) |
+| `MAX_SATURATION` | `100` | Maximum HSL saturation (%) |
+| `MAX_LIGHTNESS` | `100` | Maximum HSL lightness (%) |
+| `MAX_PERCENT` | `100` | Maximum percent |
+
+> `RGB_MAX` (`255`) is exported flat by **Numeric Maxima**; use that flat export or `Color.RGB_MAX`.
+
+### `Color` namespace
+
+Same values plus `Color.RGB_MAX` — `Color.RGB_MIN`, `Color.RGB_MAX`, `Color.HEX_RADIX`, … (11 keys).
+
+---
+
+## Geo
+
+Geographic coordinate bounds and mean Earth radius.
+
+### Flat exports
+
+| Constant | Value | Meaning |
+|----------|-------|---------|
+| `MIN_LATITUDE` | `-90` | Minimum valid latitude (degrees) |
+| `MAX_LATITUDE` | `90` | Maximum valid latitude (degrees) |
+| `MIN_LONGITUDE` | `-180` | Minimum valid longitude (degrees) |
+| `MAX_LONGITUDE` | `180` | Maximum valid longitude (degrees) |
+| `EARTH_RADIUS_KM` | `6371` | Mean Earth radius (km) |
+| `EARTH_RADIUS_MI` | `3959` | Mean Earth radius (mi) |
+
+### `Geo` namespace
+
+Same values, namespaced: `Geo.MIN_LATITUDE`, `Geo.EARTH_RADIUS_KM`, … (6 keys).
+
+---
+
+## ESLint preset
+
+A ready-made helper for the `no-magic-numbers` rule: it ignores every numeric value this
+library names, so using `magic-num` constants never trips the rule. Imported from the
+`magic-num/eslint` subpath (kept out of the main barrel — it's tooling config, not a constant).
+
+```js
+// eslint.config.js (flat config)
+import { noMagicNumbersConfig } from 'magic-num/eslint';
+
+export default [
+  {
+    rules: {
+      ...noMagicNumbersConfig,
+      // → 'no-magic-numbers': ['error', { ignore: [...all magic-num values], ignoreArrayIndexes: true }]
+    },
+  },
+];
+```
+
+Also exported: `MAGIC_NUMBER_VALUES` — the deduplicated, ascending array of every numeric
+value in the package. The list is derived from the package's own exports at load time, so it
+stays in sync automatically as constants are added.
 
 ---
 

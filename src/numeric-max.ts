@@ -16,11 +16,17 @@ const NUMERIC_MAX_VALUES = {
 } as const;
 
 // ===== NAMESPACE (public) =====
+/** Unsigned integer and colour-channel maxima. */
 export const NumericMax = { ...NUMERIC_MAX_VALUES } as const;
 
 // ===== FLAT EXPORTS (public) =====
+/** Max value of an unsigned 8-bit integer (2^8 − 1). Value: 255. */
 export const MAX_UINT8 = NUMERIC_MAX_VALUES.MAX_UINT8; // type: 255
+/** Max value of an unsigned 16-bit integer (2^16 − 1). Value: 65535. */
 export const MAX_UINT16 = NUMERIC_MAX_VALUES.MAX_UINT16; // type: 65535
+/** Max value of an unsigned 32-bit integer (2^32 − 1). Value: 4294967295. */
 export const MAX_UINT32 = NUMERIC_MAX_VALUES.MAX_UINT32; // type: 4294967295
+/** Max value of an 8-bit RGB channel. Value: 255. */
 export const RGB_MAX = NUMERIC_MAX_VALUES.RGB_MAX; // type: 255
+/** Max value of an 8-bit alpha channel. Value: 255. */
 export const ALPHA_MAX = NUMERIC_MAX_VALUES.ALPHA_MAX; // type: 255

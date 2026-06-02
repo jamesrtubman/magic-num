@@ -10,3 +10,7 @@ export * from './ports';
 export * from './numeric-max';
 export * from './test-config';
 export * from './react';
+export * from './calendar';
+export * from './angles';
+export * from './color';
+export * from './geo';

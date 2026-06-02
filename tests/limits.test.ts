@@ -7,6 +7,7 @@ import {
   ONE_KB, ONE_MB, ONE_GB,
   DEFAULT_PAGE_SIZE, MAX_PAGE_SIZE, MAX_EMAIL_LENGTH, MAX_URL_LENGTH,
   Limits, Bytes, Pagination,
+  kbToBytes, mbToBytes, gbToBytes, formatBytes,
 } from '../dist/index.js'
 
 describe('Limits flat constants', () => {
@@ -31,7 +32,23 @@ describe('Bytes flat constants', () => {
 
 describe('Bytes namespace', () => {
   it('Bytes.ONE_MB === 1048576', () => expect(Bytes.ONE_MB).toBe(1048576))
-  it('exposes exactly 3 keys', () => expect(Object.keys(Bytes)).toHaveLength(3))
+  it('exposes exactly 3 numeric constants', () => {
+    const numericKeys = Object.keys(Bytes).filter(
+      (k) => typeof (Bytes as Record<string, unknown>)[k] === 'number',
+    )
+    expect(numericKeys).toHaveLength(3)
+  })
+  it('exposes 7 keys total (3 constants + 4 helpers)', () => expect(Object.keys(Bytes)).toHaveLength(7))
+})
+
+describe('Byte formatters', () => {
+  it('kbToBytes(2) === 2048', () => expect(kbToBytes(2)).toBe(2048))
+  it('mbToBytes(1) === 1048576', () => expect(mbToBytes(1)).toBe(1048576))
+  it('gbToBytes(1) === 1073741824', () => expect(gbToBytes(1)).toBe(1073741824))
+  it('formatBytes(0) === "0 B"', () => expect(formatBytes(0)).toBe('0 B'))
+  it('formatBytes(1024) === "1 KB"', () => expect(formatBytes(1024)).toBe('1 KB'))
+  it('formatBytes(1572864) === "1.5 MB"', () => expect(formatBytes(1572864)).toBe('1.5 MB'))
+  it('available on Bytes namespace', () => expect(Bytes.kbToBytes(2)).toBe(2048))
 })
 
 describe('Pagination flat constants', () => {

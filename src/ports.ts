@@ -21,18 +21,31 @@ const PORT_VALUES = {
 } as const;
 
 // ===== NAMESPACE (public) =====
+/** Common network/service port numbers (keys omit the `PORT_` prefix). */
 export const Ports = { ...PORT_VALUES } as const;
 
 // ===== FLAT EXPORTS (public) =====
+/** FTP control port. Value: 21. */
 export const PORT_FTP = PORT_VALUES.FTP; // type: 21
+/** SSH port. Value: 22. */
 export const PORT_SSH = PORT_VALUES.SSH; // type: 22
+/** Telnet port. Value: 23. */
 export const PORT_TELNET = PORT_VALUES.TELNET; // type: 23
+/** SMTP port. Value: 25. */
 export const PORT_SMTP = PORT_VALUES.SMTP; // type: 25
+/** DNS port. Value: 53. */
 export const PORT_DNS = PORT_VALUES.DNS; // type: 53
+/** HTTP port. Value: 80. */
 export const PORT_HTTP = PORT_VALUES.HTTP; // type: 80
+/** POP3 port. Value: 110. */
 export const PORT_POP3 = PORT_VALUES.POP3; // type: 110
+/** HTTPS port. Value: 443. */
 export const PORT_HTTPS = PORT_VALUES.HTTPS; // type: 443
+/** MySQL default port. Value: 3306. */
 export const PORT_MYSQL = PORT_VALUES.MYSQL; // type: 3306
+/** PostgreSQL default port. Value: 5432. */
 export const PORT_POSTGRES = PORT_VALUES.POSTGRES; // type: 5432
+/** Redis default port. Value: 6379. */
 export const PORT_REDIS = PORT_VALUES.REDIS; // type: 6379
+/** MongoDB default port. Value: 27017. */
 export const PORT_MONGODB = PORT_VALUES.MONGODB; // type: 27017

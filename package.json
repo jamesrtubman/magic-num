@@ -13,6 +13,7 @@
     "enum",
     "http-status",
     "time",
+    "tests",
     "limits",
     "math",
     "ports",
@@ -34,6 +35,16 @@
       "require": {
         "types": "./dist/index.d.cts",
         "default": "./dist/index.cjs"
+      }
+    },
+    "./eslint": {
+      "import": {
+        "types": "./dist/eslint-preset.d.ts",
+        "default": "./dist/eslint-preset.js"
+      },
+      "require": {
+        "types": "./dist/eslint-preset.d.cts",
+        "default": "./dist/eslint-preset.cjs"
       }
     }
   },

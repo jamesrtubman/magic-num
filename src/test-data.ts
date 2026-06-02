@@ -30,6 +30,7 @@ const FAKE_DATA_VALUES = {
 // ===== BOUNDARY NAMESPACE (public) =====
 // Includes ZERO and MAX_SAFE_INT from limits (imported above).
 // They are NOT re-exported as flat exports — that would cause a barrel collision.
+/** Boundary/edge-case values for tests; also includes `ZERO` and `MAX_SAFE_INT` from limits. */
 export const Boundary = {
   ...BOUNDARY_VALUES,
   ZERO,
@@ -37,17 +38,26 @@ export const Boundary = {
 } as const;
 
 // ===== TESTDATA NAMESPACE (public — FAKE_* only) =====
+/** Canonical fake/placeholder values for tests and fixtures. */
 export const TestData = { ...FAKE_DATA_VALUES } as const;
 
 // ===== FLAT EXPORTS — boundary (new constants only) =====
 // ZERO and MAX_SAFE_INT intentionally OMITTED — already flat exports from src/limits.ts
+/** Common off-by-one / sentinel value. Value: -1. */
 export const NEGATIVE_ONE       = BOUNDARY_VALUES.NEGATIVE_ONE;       // type: -1
+/** The empty string. Value: ''. */
 export const EMPTY_STRING       = BOUNDARY_VALUES.EMPTY_STRING;       // type: ''
+/** Length of an empty array. Value: 0. */
 export const EMPTY_ARRAY_LENGTH = BOUNDARY_VALUES.EMPTY_ARRAY_LENGTH; // type: 0
 
 // ===== FLAT EXPORTS — fake data =====
+/** Canonical fake string ID. Value: '1'. */
 export const FAKE_ID        = FAKE_DATA_VALUES.FAKE_ID;        // type: '1'
+/** Canonical fake UUID v4. */
 export const FAKE_UUID      = FAKE_DATA_VALUES.FAKE_UUID;      // type: '00000000-0000-4000-8000-000000000001'
+/** Canonical fake email (RFC 2606 reserved domain). Value: 'fake@example.com'. */
 export const FAKE_EMAIL     = FAKE_DATA_VALUES.FAKE_EMAIL;     // type: 'fake@example.com'
+/** Canonical fake URL. Value: 'https://fake.example.com'. */
 export const FAKE_URL       = FAKE_DATA_VALUES.FAKE_URL;       // type: 'https://fake.example.com'
+/** Canonical fake ISO 8601 timestamp (Unix epoch). Value: '1970-01-01T00:00:00.000Z'. */
 export const FAKE_TIMESTAMP = FAKE_DATA_VALUES.FAKE_TIMESTAMP; // type: '1970-01-01T00:00:00.000Z'

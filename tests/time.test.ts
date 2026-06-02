@@ -6,6 +6,8 @@ import {
   ONE_SECOND_MS, ONE_MINUTE_MS, ONE_HOUR_MS, ONE_DAY_MS, ONE_WEEK_MS,
   ONE_MINUTE_S, ONE_HOUR_S, ONE_DAY_S, ONE_WEEK_S,
   TimeMs, TimeS,
+  secondsToMs, msToSeconds, minutesToMs, hoursToMs, msToMinutes,
+  TimeConvert,
 } from '../dist/index.js'
 
 describe('TimeMs flat constants', () => {
@@ -34,4 +36,17 @@ describe('TimeS namespace', () => {
   it('TimeS.ONE_HOUR === 3600', () => expect(TimeS.ONE_HOUR).toBe(3600))
   it('TimeS.ONE_WEEK === 604800', () => expect(TimeS.ONE_WEEK).toBe(604800))
   it('exposes exactly 4 keys', () => expect(Object.keys(TimeS)).toHaveLength(4))
+})
+
+describe('Time converters', () => {
+  it('secondsToMs(2) === 2000', () => expect(secondsToMs(2)).toBe(2000))
+  it('msToSeconds(2000) === 2', () => expect(msToSeconds(2000)).toBe(2))
+  it('minutesToMs(2) === 120000', () => expect(minutesToMs(2)).toBe(120000))
+  it('hoursToMs(1) === 3600000', () => expect(hoursToMs(1)).toBe(3600000))
+  it('msToMinutes(120000) === 2', () => expect(msToMinutes(120000)).toBe(2))
+})
+
+describe('TimeConvert namespace', () => {
+  it('TimeConvert.secondsToMs(2) === 2000', () => expect(TimeConvert.secondsToMs(2)).toBe(2000))
+  it('exposes exactly 5 helpers', () => expect(Object.keys(TimeConvert)).toHaveLength(5))
 })

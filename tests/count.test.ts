@@ -3,6 +3,7 @@ import {
   ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN,
   ELEVEN, TWELVE, THIRTEEN, FOURTEEN, FIFTEEN, SIXTEEN, SEVENTEEN, EIGHTEEN, NINETEEN, TWENTY,
   Count, Retry, Calls,
+  num, range,
 } from '../dist/index.js'
 
 describe('Count flat constants', () => {
@@ -18,7 +19,31 @@ describe('Count flat constants', () => {
 describe('Count namespace', () => {
   it('Count.ONE === 1',    () => expect(Count.ONE).toBe(1))
   it('Count.TWENTY === 20', () => expect(Count.TWENTY).toBe(20))
-  it('exposes exactly 20 keys', () => expect(Object.keys(Count)).toHaveLength(20))
+  it('exposes exactly 20 numeric constants', () => {
+    const numericKeys = Object.keys(Count).filter(
+      (k) => typeof (Count as Record<string, unknown>)[k] === 'number',
+    )
+    expect(numericKeys).toHaveLength(20)
+  })
+  it('attaches of/range helpers', () => {
+    expect(Count.of(7)).toBe(7)
+    expect(Count.range(1, 3)).toEqual([1, 2, 3])
+  })
+})
+
+describe('num', () => {
+  it('returns its argument unchanged', () => expect(num(256)).toBe(256))
+  it('works for any number', () => expect(num(1000000)).toBe(1000000))
+})
+
+describe('range', () => {
+  it('ascending inclusive', () => expect(range(1, 5)).toEqual([1, 2, 3, 4, 5]))
+  it('with step', () => expect(range(0, 10, 2)).toEqual([0, 2, 4, 6, 8, 10]))
+  it('descending when start > end', () => expect(range(5, 1)).toEqual([5, 4, 3, 2, 1]))
+  it('single element when start === end', () => expect(range(3, 3)).toEqual([3]))
+  it('throws on step 0', () => expect(() => range(1, 3, 0)).toThrow(RangeError))
+  it('throws on negative step', () => expect(() => range(1, 3, -1)).toThrow(RangeError))
+  it('throws on non-integer step', () => expect(() => range(1, 3, 1.5)).toThrow(RangeError))
 })
 
 describe('Retry namespace', () => {
