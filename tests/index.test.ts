@@ -9,3 +9,18 @@ describe('magic-num build smoke test', () => {
     expect(typeof magicNum).toBe('object')
   })
 })
+
+describe('per-module subpath builds', () => {
+  it('dist/http.js exposes HTTP_OK', async () => {
+    const http = await import('../dist/http.js')
+    expect(http.HTTP_OK).toBe(200)
+  })
+  it('dist/filesystem.js exposes DIR_MODE_DEFAULT', async () => {
+    const fs = await import('../dist/filesystem.js')
+    expect(fs.DIR_MODE_DEFAULT).toBe(0o755)
+  })
+  it('dist/ascii.js exposes MAX_CODE_POINT', async () => {
+    const ascii = await import('../dist/ascii.js')
+    expect(ascii.MAX_CODE_POINT).toBe(0x10ffff)
+  })
+})

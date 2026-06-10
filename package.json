@@ -46,6 +46,166 @@
         "types": "./dist/eslint-preset.d.cts",
         "default": "./dist/eslint-preset.cjs"
       }
+    },
+    "./http": {
+      "import": {
+        "types": "./dist/http.d.ts",
+        "default": "./dist/http.js"
+      },
+      "require": {
+        "types": "./dist/http.d.cts",
+        "default": "./dist/http.cjs"
+      }
+    },
+    "./time": {
+      "import": {
+        "types": "./dist/time.d.ts",
+        "default": "./dist/time.js"
+      },
+      "require": {
+        "types": "./dist/time.d.cts",
+        "default": "./dist/time.cjs"
+      }
+    },
+    "./limits": {
+      "import": {
+        "types": "./dist/limits.d.ts",
+        "default": "./dist/limits.js"
+      },
+      "require": {
+        "types": "./dist/limits.d.cts",
+        "default": "./dist/limits.cjs"
+      }
+    },
+    "./test-data": {
+      "import": {
+        "types": "./dist/test-data.d.ts",
+        "default": "./dist/test-data.js"
+      },
+      "require": {
+        "types": "./dist/test-data.d.cts",
+        "default": "./dist/test-data.cjs"
+      }
+    },
+    "./count": {
+      "import": {
+        "types": "./dist/count.d.ts",
+        "default": "./dist/count.js"
+      },
+      "require": {
+        "types": "./dist/count.d.cts",
+        "default": "./dist/count.cjs"
+      }
+    },
+    "./math": {
+      "import": {
+        "types": "./dist/math.d.ts",
+        "default": "./dist/math.js"
+      },
+      "require": {
+        "types": "./dist/math.d.cts",
+        "default": "./dist/math.cjs"
+      }
+    },
+    "./ports": {
+      "import": {
+        "types": "./dist/ports.d.ts",
+        "default": "./dist/ports.js"
+      },
+      "require": {
+        "types": "./dist/ports.d.cts",
+        "default": "./dist/ports.cjs"
+      }
+    },
+    "./numeric-max": {
+      "import": {
+        "types": "./dist/numeric-max.d.ts",
+        "default": "./dist/numeric-max.js"
+      },
+      "require": {
+        "types": "./dist/numeric-max.d.cts",
+        "default": "./dist/numeric-max.cjs"
+      }
+    },
+    "./test-config": {
+      "import": {
+        "types": "./dist/test-config.d.ts",
+        "default": "./dist/test-config.js"
+      },
+      "require": {
+        "types": "./dist/test-config.d.cts",
+        "default": "./dist/test-config.cjs"
+      }
+    },
+    "./react": {
+      "import": {
+        "types": "./dist/react.d.ts",
+        "default": "./dist/react.js"
+      },
+      "require": {
+        "types": "./dist/react.d.cts",
+        "default": "./dist/react.cjs"
+      }
+    },
+    "./calendar": {
+      "import": {
+        "types": "./dist/calendar.d.ts",
+        "default": "./dist/calendar.js"
+      },
+      "require": {
+        "types": "./dist/calendar.d.cts",
+        "default": "./dist/calendar.cjs"
+      }
+    },
+    "./angles": {
+      "import": {
+        "types": "./dist/angles.d.ts",
+        "default": "./dist/angles.js"
+      },
+      "require": {
+        "types": "./dist/angles.d.cts",
+        "default": "./dist/angles.cjs"
+      }
+    },
+    "./color": {
+      "import": {
+        "types": "./dist/color.d.ts",
+        "default": "./dist/color.js"
+      },
+      "require": {
+        "types": "./dist/color.d.cts",
+        "default": "./dist/color.cjs"
+      }
+    },
+    "./geo": {
+      "import": {
+        "types": "./dist/geo.d.ts",
+        "default": "./dist/geo.js"
+      },
+      "require": {
+        "types": "./dist/geo.d.cts",
+        "default": "./dist/geo.cjs"
+      }
+    },
+    "./filesystem": {
+      "import": {
+        "types": "./dist/filesystem.d.ts",
+        "default": "./dist/filesystem.js"
+      },
+      "require": {
+        "types": "./dist/filesystem.d.cts",
+        "default": "./dist/filesystem.cjs"
+      }
+    },
+    "./ascii": {
+      "import": {
+        "types": "./dist/ascii.d.ts",
+        "default": "./dist/ascii.js"
+      },
+      "require": {
+        "types": "./dist/ascii.d.cts",
+        "default": "./dist/ascii.cjs"
+      }
     }
   },
   "sideEffects": false,
@@ -63,7 +223,11 @@
     "lint": "eslint src",
     "format": "prettier --write src",
     "typecheck": "tsc --noEmit",
-    "prepublishOnly": "npm run build && npm test"
+    "prepublishOnly": "npm run build && npm test",
+    "changeset": "changeset",
+    "version": "changeset version",
+    "release": "npm run build && changeset publish",
+    "docs": "typedoc"
   },
   "devDependencies": {
     "@changesets/cli": "^2.31.0",
@@ -73,6 +237,7 @@
     "eslint-config-prettier": "^10.1.8",
     "prettier": "^3.8.3",
     "tsup": "^8.5.1",
+    "typedoc": "^0.28.19",
     "typescript": "^5.8.0",
     "typescript-eslint": "^8.59.2",
     "vitest": "^4.1.5"
