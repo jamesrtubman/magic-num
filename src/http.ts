@@ -36,12 +36,20 @@ const HTTP_CODES = {
   GATEWAY_TIMEOUT: 504,
 } as const;
 
-/** HTTP status codes plus `isSuccess` / `isClientError` / `isServerError` range predicates. */
+/** HTTP status codes plus `isInformational` / `isSuccess` / `isRedirect` / `isClientError` / `isServerError` range predicates. */
 export const HttpStatus = {
   ...HTTP_CODES,
+  /** True for 1xx status codes. */
+  isInformational(code: number): boolean {
+    return code >= 100 && code < 200;
+  },
   /** True for 2xx status codes. */
   isSuccess(code: number): boolean {
     return code >= 200 && code < 300;
+  },
+  /** True for 3xx status codes. */
+  isRedirect(code: number): boolean {
+    return code >= 300 && code < 400;
   },
   /** True for 4xx status codes. */
   isClientError(code: number): boolean {

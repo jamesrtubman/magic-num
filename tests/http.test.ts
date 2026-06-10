@@ -52,6 +52,22 @@ describe('HttpStatus.isServerError', () => {
   it('returns false for 404', () => expect(HttpStatus.isServerError(404)).toBe(false))
 })
 
+describe('HttpStatus.isInformational', () => {
+  it('returns true for 100', () => expect(HttpStatus.isInformational(100)).toBe(true))
+  it('returns true for 101', () => expect(HttpStatus.isInformational(101)).toBe(true))
+  it('returns true for 199', () => expect(HttpStatus.isInformational(199)).toBe(true))
+  it('returns false for 200', () => expect(HttpStatus.isInformational(200)).toBe(false))
+  it('returns false for 99', () => expect(HttpStatus.isInformational(99)).toBe(false))
+})
+
+describe('HttpStatus.isRedirect', () => {
+  it('returns true for 300', () => expect(HttpStatus.isRedirect(300)).toBe(true))
+  it('returns true for 301', () => expect(HttpStatus.isRedirect(301)).toBe(true))
+  it('returns true for 399', () => expect(HttpStatus.isRedirect(399)).toBe(true))
+  it('returns false for 200', () => expect(HttpStatus.isRedirect(200)).toBe(false))
+  it('returns false for 400', () => expect(HttpStatus.isRedirect(400)).toBe(false))
+})
+
 describe('HttpStatus namespace coverage', () => {
   it('exposes exactly 25 status code keys', () => {
     const codeKeys = Object.keys(HttpStatus).filter(k => !k.startsWith('is'))
