@@ -14,3 +14,5 @@ export * from './calendar';
 export * from './angles';
 export * from './color';
 export * from './geo';
+export * from './filesystem';
+export * from './ascii';
