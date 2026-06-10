@@ -1,0 +1,9 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "entryPoints": ["src/index.ts", "src/eslint-preset.ts"],
+  "out": "docs",
+  "name": "magic-num",
+  "includeVersion": true,
+  "excludePrivate": true,
+  "readme": "README.md"
+}
