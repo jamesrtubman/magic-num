@@ -16,6 +16,20 @@ import { HTTP_OK, HttpStatus, ONE_SECOND_MS, FAKE_EMAIL } from 'magic-num';
 const { HTTP_OK, HttpStatus, ONE_SECOND_MS, FAKE_EMAIL } = require('magic-num');
 ```
 
+### Subpath imports
+
+Every module is also available as its own entry point — import only what you need:
+
+```typescript
+import { HTTP_OK, HttpStatus } from 'magic-num/http';
+import { ONE_SECOND_MS } from 'magic-num/time';
+import { DIR_MODE_DEFAULT } from 'magic-num/filesystem';
+```
+
+Available subpaths: `http`, `time`, `limits`, `test-data`, `count`, `math`, `ports`,
+`numeric-max`, `test-config`, `react`, `calendar`, `angles`, `color`, `geo`,
+`filesystem`, `ascii`, plus the tooling entry `eslint`.
+
 ## TypeScript: Literal Types
 
 All constants carry literal types — values are not widened to `number` or `string`:
@@ -64,7 +78,7 @@ import { FAKE_EMAIL } from 'magic-num';
 
 ### `HttpStatus` namespace
 
-`HttpStatus` exposes all 25 codes under short keys plus three helper functions:
+`HttpStatus` exposes all 25 codes under short keys plus five range predicates:
 
 | Member | Value / Signature |
 |--------|-------------------|
@@ -93,7 +107,9 @@ import { FAKE_EMAIL } from 'magic-num';
 | `HttpStatus.BAD_GATEWAY` | `502` |
 | `HttpStatus.SERVICE_UNAVAILABLE` | `503` |
 | `HttpStatus.GATEWAY_TIMEOUT` | `504` |
+| `HttpStatus.isInformational(code)` | `(code: number) => boolean` — true when 100–199 |
 | `HttpStatus.isSuccess(code)` | `(code: number) => boolean` — true when 200–299 |
+| `HttpStatus.isRedirect(code)` | `(code: number) => boolean` — true when 300–399 |
 | `HttpStatus.isClientError(code)` | `(code: number) => boolean` — true when 400–499 |
 | `HttpStatus.isServerError(code)` | `(code: number) => boolean` — true when 500–599 |
 
@@ -565,6 +581,66 @@ Same values, namespaced: `Geo.MIN_LATITUDE`, `Geo.EARTH_RADIUS_KM`, … (6 keys)
 
 ---
 
+## Filesystem
+
+Permission modes, path/name length limits, and stream buffer sizes.
+
+### Flat exports
+
+| Constant | Value | Meaning |
+|----------|-------|---------|
+| `FILE_MODE_DEFAULT` | `0o644` | Default file permissions (rw-r--r--) |
+| `FILE_MODE_PRIVATE` | `0o600` | Owner-only file permissions (rw-------) |
+| `FILE_MODE_READONLY` | `0o444` | Read-only file permissions (r--r--r--) |
+| `DIR_MODE_DEFAULT` | `0o755` | Default directory permissions (rwxr-xr-x) |
+| `MODE_ALL` | `0o777` | Full permissions for everyone (rwxrwxrwx) |
+| `MAX_FILENAME_LENGTH` | `255` | Max filename length in bytes (ext4, APFS, NTFS) |
+| `MAX_PATH_LINUX` | `4096` | Linux PATH_MAX (bytes) |
+| `MAX_PATH_WINDOWS` | `260` | Windows legacy MAX_PATH (characters) |
+| `DEFAULT_HIGH_WATER_MARK` | `16384` | Node.js stream default highWaterMark (16 KiB) |
+| `STREAM_CHUNK_64K` | `65536` | Common 64 KiB read/write chunk size |
+
+### `FileSystem` namespace
+
+Same values, namespaced: `FileSystem.DIR_MODE_DEFAULT`, `FileSystem.MAX_PATH_LINUX`, … (10 keys).
+
+---
+
+## ASCII & Unicode
+
+Character codes and code-point boundaries.
+
+### Flat exports — ASCII
+
+| Constant | Value | Meaning |
+|----------|-------|---------|
+| `CHAR_CODE_UPPER_A` | `65` | Character code of `'A'` |
+| `CHAR_CODE_LOWER_A` | `97` | Character code of `'a'` |
+| `CHAR_CODE_DIGIT_ZERO` | `48` | Character code of `'0'` |
+| `CHAR_CODE_SPACE` | `32` | Character code of `' '` |
+| `CHAR_CODE_NEWLINE` | `10` | Character code of `'\n'` |
+| `ASCII_MAX` | `127` | Highest ASCII code point |
+| `ASCII_PRINTABLE_MIN` | `32` | First printable ASCII character (space) |
+| `ASCII_PRINTABLE_MAX` | `126` | Last printable ASCII character (`'~'`) |
+| `LETTER_CASE_OFFSET` | `32` | Offset between upper- and lowercase letters |
+| `ALPHABET_LENGTH` | `26` | Letters in the English alphabet |
+
+### Flat exports — Unicode
+
+| Constant | Value | Meaning |
+|----------|-------|---------|
+| `MAX_CODE_POINT` | `1114111` | Highest valid code point (0x10FFFF) |
+| `BMP_MAX` | `65535` | Top of the Basic Multilingual Plane (0xFFFF) |
+| `SURROGATE_MIN` | `55296` | First surrogate code point (0xD800) |
+| `SURROGATE_MAX` | `57343` | Last surrogate code point (0xDFFF) |
+| `REPLACEMENT_CHAR_CODE` | `65533` | Replacement character U+FFFD |
+
+### `Ascii` / `Unicode` namespaces
+
+Same values, namespaced: `Ascii.CHAR_CODE_UPPER_A`, … (10 keys); `Unicode.MAX_CODE_POINT`, … (5 keys).
+
+---
+
 ## ESLint preset
 
 A ready-made helper for the `no-magic-numbers` rule: it ignores every numeric value this
@@ -588,6 +664,32 @@ export default [
 Also exported: `MAGIC_NUMBER_VALUES` — the deduplicated, ascending array of every numeric
 value in the package. The list is derived from the package's own exports at load time, so it
 stays in sync automatically as constants are added.
+
+### Customizing: `createNoMagicNumbersConfig(options)`
+
+Build the same rule config with custom severity, extra ignored values, or other
+`no-magic-numbers` options:
+
+```js
+import { createNoMagicNumbersConfig } from 'magic-num/eslint';
+
+export default [
+  {
+    rules: {
+      ...createNoMagicNumbersConfig({
+        severity: 'warn',        // default 'error'
+        extraIgnores: [42, 7],   // merged with MAGIC_NUMBER_VALUES
+        ignoreArrayIndexes: true, // default true
+        ignoreDefaultValues: true, // default false
+        enforceConst: true,      // default false
+        detectObjects: false,    // default false
+      }),
+    },
+  },
+];
+```
+
+`noMagicNumbersConfig` is simply `createNoMagicNumbersConfig()` with all defaults.
 
 ---
 
